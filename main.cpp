@@ -25,16 +25,14 @@ int main()
 
     while (!fileinput.eof()){
         fileinput>>aus2;
-cout<<aus2<<"aa\n";
         if (aus2 == '@'){
             if(risposta==1)
                  fileoutput << "</div>";
             risposta=0;
             fileoutput << "</div><div class='domanda'>";
 
-            getline(fileinput, aus, '\n'); // use ' ' as separator, default is '\n' (newline). Now name is "John".
+            getline(fileinput, aus, '\n');
             fileoutput << aus;
-cout<<aus<<"domanda\n";
         }
 
         if (aus2 == '!'){
@@ -45,13 +43,11 @@ cout<<aus<<"domanda\n";
 
             getline(fileinput, aus, '\n');
             fileoutput << aus;
-cout<<aus<<"risposta\n";
         }
         if (aus2 != '@' && aus2 != '!'){
             fileoutput << aus;
             getline(fileinput, aus, '\n');
             fileoutput << aus;
-cout<<aus<<"null\n";
         }
 
     }
