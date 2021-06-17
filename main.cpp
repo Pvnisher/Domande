@@ -21,7 +21,7 @@ int main()
     fileinput.open(nomefile, ios::in);
     fileoutput.open(nomeout, ios::out);
 
-    fileoutput << "<html><head><script src='https://www.w3schools.com/lib/w3.js'></script><style>.container {height:10%; max-height:15%; display: inline-block;}.domanda{font-weight: bold;}</style></head><body><button id='bottone' style='position:fixed; margin-left: 80%' onclick=\"w3.toggleShow('.risposta')\">Mostra/nascondi riposte</button>";
+    fileoutput << "<html><head><script src='https://www.w3schools.com/lib/w3.js'></script><style>.container {height:20%; max-height:20%; display: inline-block; overflow: scroll; width: 100%;}.domanda{font-weight: bold;}</style></head><body><button id='bottone' style='position:fixed; margin-left: 80%' onclick=\"w3.toggleShow('.risposta')\">Mostra/nascondi riposte</button>";
 
     while (!fileinput.eof()){
         fileinput>>aus2;
@@ -32,7 +32,7 @@ int main()
             fileoutput << "</div><div class='domanda'>";
 
             getline(fileinput, aus, '\n');
-            fileoutput << aus;
+            fileoutput << aus << "<br>";
         }
 
         if (aus2 == '!'){
@@ -42,12 +42,12 @@ int main()
             fileoutput << "</div><div class='container'><div class='risposta'>";
 
             getline(fileinput, aus, '\n');
-            fileoutput << aus;
+            fileoutput << aus << "<br>";
         }
         if (aus2 != '@' && aus2 != '!'){
             fileoutput << aus;
             getline(fileinput, aus, '\n');
-            fileoutput << aus;
+            fileoutput << aus << "<br>";
         }
 
     }
