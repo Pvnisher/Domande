@@ -24,6 +24,7 @@ int main()
     fileoutput << "<html><head><script src='https://www.w3schools.com/lib/w3.js'></script><style>.container {height:20%; max-height:20%; display: inline-block; overflow: scroll; width: 100%;}.domanda{font-weight: bold;}</style></head><body><button id='bottone' style='position:fixed; margin-left: 80%' onclick=\"w3.toggleShow('.risposta')\">Mostra/nascondi riposte</button>";
 
     while (!fileinput.eof()){
+        aus="";
         fileinput>>aus2;
         if (aus2 == '@'){
             if(risposta==1)
