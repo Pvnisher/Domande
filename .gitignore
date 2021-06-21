@@ -1,5 +1,6 @@
 bin/
 obj/
+cmake-build-debug/
 *.cbp
 *.depend
 *.layout
@@ -7,3 +8,5 @@ obj/
 *.html
 *.exe
 *.o
+
+!headers.html
