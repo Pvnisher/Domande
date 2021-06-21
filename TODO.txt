@@ -1,0 +1,5 @@
+togliere verifica di x=num se rand è attivo
+togliere .txt dal nome del file di output
+migliorare frontend
+controllo esistenza file
+rendere funzione scriviinizio leggibile e modificabile
