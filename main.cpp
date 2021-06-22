@@ -8,7 +8,7 @@ void write_headers(const string& output_file, const string& = "headers.html");
 int main(int argc, char **argv) {
     string file_domande;
     string file_output;
-    string header = "headers.html";
+    string header;
     string aus;
     bool flags[]{false, false, false};
     char aus2;
@@ -33,12 +33,12 @@ int main(int argc, char **argv) {
                     if ((s1[1] == 'f' || s1 == "--file") && s2.length() > 0) {
                         flags[0] = true;
                         file_domande = s2;
-                        cout << file_domande << " " << argv[i] << '\n';
+
                     }
                     if ((s1[1] == 't' || s1 == "--template") && s2.length() > 0) {
                         flags[1] = true;
                         header = s2;
-                        cout << header << " " << argv[i] << '\n';
+
                     }
                     if ((s1[1] == 'o' || s1 == "--output") && s2.length() > 0) {
                         flags[2] = true;
@@ -60,6 +60,10 @@ int main(int argc, char **argv) {
         file_output.append(".html");
     }
 
+    cout << "File Domande: " << file_domande << '\n';
+    cout << "Header File: " << ((header.empty()) ? "Default Headers" : header) << '\n';
+    cout << "Output File: " << file_output << '\n';
+
     fstream stream_input;
     fstream stream_output;
 
@@ -70,25 +74,35 @@ int main(int argc, char **argv) {
 
     int id = 1;
     int risposta = 0;
+    int domanda = 0;
+    int sdrogo = 0;
+    stream_output << "<div id='main'>";
     while (!stream_input.eof())
     {
         stream_input >> aus2;
 
         if (aus2 == '@')
         {
-            if (risposta == 1)
+            sdrogo = 1;
+            if (risposta == 1){
                 stream_output << "</div>";
-            risposta = 0;
-            stream_output << "</div></div><div id='" << id++ << "' class='sdrogo'><div class='domanda'>";
+                risposta = 0;
+                if(sdrogo)
+                    stream_output << "</div>";
+            }
+            domanda = 1;
+            stream_output << "<div id='" << id++ << "' class='sdrogo'><div class='domanda'>";
             getline(stream_input, aus, '\n');
             stream_output << aus << "<br>\n";
         }
         if (aus2 == '!')
         {
-            if (risposta == 1)
+            if(domanda == 1){
                 stream_output << "</div>";
+                domanda = 0;
+            }
             risposta = 1;
-            stream_output << "</div><div class='container'><div class='risposta'>";
+            stream_output << "<div class='risposta'>";
 
             getline(stream_input, aus, '\n');
             stream_output << aus << "<br>\n";
@@ -101,9 +115,10 @@ int main(int argc, char **argv) {
         }
     }
 
-    stream_output << "</div></div></div></div></body></html>";
+    stream_output << "</div></div></div></div></div></body></html>";
     stream_input.close();
     stream_output.close();
+    cout << "GENERAZIONE COMPLETATA CON SUCCESSO\n";
 
     return 0;
 }
@@ -117,10 +132,8 @@ void write_headers(const string& output_file, const string& headers_file)
         input.open(headers_file, ios::in);
         if (input.is_open()) {
             string str;
-            while (input >> str) {
+            while (input >> str)
                 file << str << " ";
-                cout << str << " ";
-            }
             input.close();
         }
         else

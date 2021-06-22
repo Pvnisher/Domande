@@ -1,0 +1,111 @@
+<html lang="it">
+    <head>
+        <script src='https://www.w3schools.com/lib/w3.js'></script>
+        <script>
+        let x;
+        let num;
+        let buffer;
+
+        class Stack {
+            constructor() {
+                this.store = [];
+                this.top = 0;
+            }
+            print(){
+                this.store.forEach(element => console.log(element));
+            }
+            push(element) {
+                return this.store[this.top++] = element;
+            }
+            peek() {
+                return this.top > 0 ? this.store[this.top - 1] :  this.store[this.top];
+            }
+            pop() {
+                let out;
+                if(this.top > 0) {
+                    out = this.store[--this.top]
+                }
+                else{
+                    out = this.store[this.top]
+                }
+                return out;
+            }
+        }
+
+
+        function cambia(t){
+            if(t==='a' && x<document.querySelectorAll('.sdrogo').length) {
+                document.getElementById(x).style = "display:none;";
+
+                    if (rand === true)
+                        x = Math.floor((Math.random() * num) + 1);
+                    else
+                        x++;
+                    x = buffer.push(x);
+
+
+                document.getElementById(x).style = "display:inline-block;";
+            }
+            if(t==='i' && x > 0){
+                document.getElementById(x).style="display:none;";
+
+            /*
+                if(rand==true){
+                    x=Math.floor((Math.random() * num) + 1);
+                }
+                else x--;
+            */
+                x = buffer.pop();
+                document.getElementById(x).style="display:inline-block;";
+            }
+            buffer.print();
+        }
+        function start(){
+            x=1;
+            buffer = new Stack();
+
+            num=document.querySelectorAll('.sdrogo').length;
+            document.getElementById(x).style="display:inline-block; w3.toggleShow('.risposta')";
+            console.log("pushing x" + x);
+            buffer.push(x);
+        }
+        function toggleRand(){
+            if(rand==true){
+                document.getElementById('rand').value="rand disattivo";
+                rand=false;
+            }
+            else{
+                document.getElementById('rand').value="rand attivo";
+                rand=true;
+            }
+        }
+        </script>
+        <style>
+            .container {
+                height:100vh;
+                display: inline-block;
+                overflow: scroll;
+                width: 25%;
+                left: 0;
+            }
+
+            #main{
+                width: 75%;
+            }
+            .domanda{
+                font-weight: bold
+            }
+            .sdrogo{
+                width: 100%; display:none;
+            }
+        </style>
+        <title>Domande</title>
+    </head>
+    <body onload='start()'>
+        <div id="sidebar">
+            <input type=button id="nascondimostra" style="position:fixed; margin-left: 80%" onclick="w3.toggleShow('.risposta')" value="Mostra/nascondi riposte">
+            <input type=button id="next" style="position:fixed; margin-left: 80%; margin-top: 10%;" onclick="cambia('a')" value="Prossimo">
+            <input type=button id="back" style="position:fixed; margin-left: 80%; margin-top: 12%;" onclick="cambia('i')" value="Indietro">
+            <input type=button id="rand" style="position:fixed; margin-left: 80%; margin-top: 5%;" onclick="toggleRand()"  value="rand disattivo">
+        </div>
+
