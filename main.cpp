@@ -165,5 +165,8 @@ void write_headers(const string& output_file, const string& headers_file)
     file << "<input type=button id='next' style='position:fixed; margin-left: 85%; margin-top: 10%;' onclick=\"cambia('a')\" value='Prossimo'>";
     file << "<input type=button id='back' style='position:fixed; margin-left: 85%; margin-top: 12%;' onclick=\"cambia('i')\" value='Indietro'>";
     file << "<input type=button id='rand' style='position:fixed; margin-left: 85%; margin-top: 5%;' onclick='toggleRand()'  value='rand disattivo'>";
+<<<<<<< HEAD
+>>>>>>> e365900e49d49f63151a8cd727cd6744d378e8e5
+=======
 >>>>>>> e365900e49d49f63151a8cd727cd6744d378e8e5
 }
