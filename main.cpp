@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 void write_headers(const string& output_file, const string& = "headers.html");
@@ -18,14 +19,14 @@ int main(int argc, char **argv) {
             string s1(argv[i]);
             if (s1[0] == '-' && s1.length() > 1) {
                 if ((s1[1] == 'h' || s1 == "--help")){
-                    cout << argv[0] << " is a tool to auto generates html documents for study\n";
+                    cout << argv[0] << " Simple application to automate the generation of html files starting from file.txt of questions - answers for training exams.\n";
                     cout << "Options : \n";
                     cout << "\t-h\t--help\tShow this help\n";
                     cout << "\t-f\t--file\tFollowed by the path set the path to the txt file to convert\n";
                     cout << "\t-o\t--output\tFollowed by the path set the path to output file (specify .html in the name)\n";
                     cout << "\t-t\t--template\tFollowed by the path set the path to the template files containing headers to be printed before the contents\n";
-                    cout << "\n You can also use the interactive mode running " << argv[0] << "whitout arguments\n";
-                    cout << "\n Example usage:" << argv[0] <<  "-h headers.html -f file.txt -o out.html\n";
+                    cout << "\n You can also use the interactive mode running " << argv[0] << " whitout arguments\n";
+                    cout << "\n Example usage:" << argv[0] <<  " -t headers.html -f file.txt -o out.html\n";
                     return 0;
                 }
                 if(i+1 < argc){
@@ -33,17 +34,14 @@ int main(int argc, char **argv) {
                     if ((s1[1] == 'f' || s1 == "--file") && s2.length() > 0) {
                         flags[0] = true;
                         file_domande = s2;
-                        cout << file_domande << " " << argv[i] << '\n';
                     }
                     if ((s1[1] == 't' || s1 == "--template") && s2.length() > 0) {
                         flags[1] = true;
                         header = s2;
-                        cout << header << " " << argv[i] << '\n';
                     }
                     if ((s1[1] == 'o' || s1 == "--output") && s2.length() > 0) {
                         flags[2] = true;
                         file_output = s2;
-                        cout << file_output << " " << argv[i] << '\n';
                     }
                 }
             }
@@ -70,28 +68,39 @@ int main(int argc, char **argv) {
 
     int id = 1;
     int risposta = 0;
+    int domanda = 0;
+    int block = 0;
     while (!stream_input.eof())
     {
         stream_input >> aus2;
 
         if (aus2 == '@')
         {
-            if (risposta == 1)
-                stream_output << "</div>";
-            risposta = 0;
-            stream_output << "</div></div><div id='" << id++ << "' class='sdrogo'><div class='domanda'>";
+            if (risposta == 1) {
+                stream_output <<"</div></div>";
+                risposta = 0;
+                if (block == 1) {
+                    block = 0;
+                    stream_output << "</div>";
+                }
+            }
+            stream_output << "<div id='" << id++ << "' class='sdrogo'><div class='domanda'>";
             getline(stream_input, aus, '\n');
             stream_output << aus << "<br>\n";
+            domanda = 1;
+            block = 1;
         }
         if (aus2 == '!')
         {
-            if (risposta == 1)
+            if(domanda == 1) { 
                 stream_output << "</div>";
-            risposta = 1;
-            stream_output << "</div><div class='container'><div class='risposta'>";
+                domanda = 0;
+            }
 
+            stream_output << "<div class='container'><div class='risposta'>";
             getline(stream_input, aus, '\n');
             stream_output << aus << "<br>\n";
+            risposta = 1;
         }
         if (aus2 != '@' && aus2 != '!')
         {
@@ -102,6 +111,7 @@ int main(int argc, char **argv) {
     }
 
     stream_output << "</div></div></div></div></body></html>";
+    cout << "FILE READY";
     stream_input.close();
     stream_output.close();
 
@@ -117,10 +127,8 @@ void write_headers(const string& output_file, const string& headers_file)
         input.open(headers_file, ios::in);
         if (input.is_open()) {
             string str;
-            while (input >> str) {
+            while (input >> str) 
                 file << str << " ";
-                cout << str << " ";
-            }
             input.close();
         }
         else
