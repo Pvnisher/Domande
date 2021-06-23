@@ -2,6 +2,7 @@ bin/
 obj/
 cmake-build-debug/
 .idea/
+build/
 *.cbp
 *.depend
 *.layout
