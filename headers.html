@@ -1,12 +1,12 @@
 <html lang="it">
 
 <head>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         let x;
         let num;
         let buffer;
         function cambia(t) {
-            var oldx;
             if (t === 'a') {
                 document.getElementById(x).style = "display:none;";
                 if (buffer[buffer.length - 1] !== x || buffer.length < 1)
@@ -50,10 +50,10 @@
     </script>
     <style>
         .container {
-            height: 100vh;
             display: inline-block;
             overflow: hidden;
         }
+
         #sidebar {
             display: flex;
             flex-flow: column;
@@ -62,16 +62,10 @@
             position: absolute;
             right: 0;
         }
-        #block {
-            width: 70%;
-        }
-        #main {
-            width: 75%;
-        }
+        
+        #block { width: 70%; }
 
-        .domanda {
-            font-weight: bold
-        }
+        .domanda { font-weight: bold }
 
         .sdrogo {
             width: 100%;
